@@ -94,6 +94,6 @@ Al aumentar la profundidad de búsqueda de los algoritmos:
 - **Eficiencia:** Los algoritmos serán más lentos y consumirán más recursos, ya que explorarán más nodos del árbol de juego.
 - **Calidad de la Jugada:** Las jugadas serán más óptimas y estratégicas, al considerar más posibilidades y consecuencias futuras de cada movimiento.
 
-### Conclucion
+### conclusión
 
 Al ajustar la profundidad de los algoritmos de búsqueda como Minimax y poda Alpha-Beta, se debe encontrar un equilibrio entre la eficiencia en tiempo y recursos y la calidad de las decisiones tomadas por la inteligencia artificial. Un nivel de profundidad demasiado bajo resultará en decisiones apresuradas y posiblemente subóptimas, mientras que un nivel de profundidad demasiado alto puede ser computacionalmente costoso y, en algunos casos, innecesario.
