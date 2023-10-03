@@ -29,6 +29,19 @@ class ConectaCuatroGUI:
                                    variable=self.var_dificultad)
         self.dificultad.pack()
 
+        self.algoritmo_var = tk.StringVar(value='AlphaBetaMinimax')
+        self.algoritmo_menu = tk.OptionMenu(
+            self.opciones_frame,
+            self.algoritmo_var,
+            'Minimax',
+            'AlphaBeta',
+            'AlphaBetaMinimax'
+        )
+        self.algoritmo_menu.pack(pady=10)
+        self.algoritmo_label = tk.Label(self.opciones_frame, text="Algoritmo:")
+        self.algoritmo_label.pack(side="left")
+        self.algoritmo_menu.pack(side="right")
+
         self.var_dificultad.trace_add('write', self.cambiar_color_dificultad)
 
         self.boton_iniciar = tk.Button(
@@ -97,10 +110,12 @@ class ConectaCuatroGUI:
         self.centrar_ventana(700, 670)
 
         profundidad = self.dificultad.get()
+        algoritmo_seleccionado = self.algoritmo_var.get()
         self.juego = ConectaCuatro()
         self.humano = Jugador('X')
-        self.ia_instance   = IA(profundidad)
-        self.computadora = Computadora('O', self.ia_instance  )
+        self.ia_instance = IA(profundidad, algoritmo_seleccionado)
+        #self.ia_instance   = IA(profundidad)
+        self.computadora = Computadora('O', self.ia_instance)
 
         self.root.bind("<Button-1>", self.movimiento_humano)
 
@@ -187,7 +202,10 @@ class ConectaCuatroGUI:
 
     def movimiento_computadora(self):
         """Maneja el movimiento de la computadora."""
-        columna = self.computadora.ia_instance .encontrar_mejor_movimiento(self.juego)
+        columna = self.computadora.ia_instance.encontrar_mejor_movimiento(self.juego)
+        if columna is None:
+            messagebox.showerror("Error", "La IA no pudo encontrar un movimiento válido.")
+            return  # Salir del método si no hay un movimiento válido
         self.juego.colocar_ficha(columna)
         ganador = self.juego.verificar_ganador()
         if ganador or self.juego.esta_lleno():
@@ -198,6 +216,7 @@ class ConectaCuatroGUI:
         self.juego.cambiar_jugador()
         self.actualizar_turno()
         self.dibujar_tablero()
+
 
     def finalizar_juego(self, ganador):
         """Finaliza el juego y muestra un mensaje con el resultado."""
